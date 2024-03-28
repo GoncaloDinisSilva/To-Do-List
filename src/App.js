@@ -45,6 +45,14 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  const saveEditedTodo = (id, newText) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: newText, isEdit: false } : todo
+    );
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  };
+
   return (
     <div className="App">
       <h1>MY TODO LIST</h1>
@@ -54,6 +62,7 @@ function App() {
         deleteTodo={deleteTodo}
         completeTodo={completeTodo}
         editTodo={editTodo}
+        saveEditedTodo={saveEditedTodo}
       />
     </div>
   );

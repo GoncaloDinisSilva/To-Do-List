@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
 
-function TodoItem({ todo, deleteTodo, completeTodo, editTodo }) {
+function TodoItem({ todo, deleteTodo, completeTodo, editTodo, saveEditedTodo }) {
     const [inputValue, setInputValue] = useState(todo.text);
     const [showConfirm, setShowConfirm] = useState(false);
     const inputRef = useRef(null);
@@ -29,6 +29,15 @@ function TodoItem({ todo, deleteTodo, completeTodo, editTodo }) {
         editTodo(todo.id, true);
     }
 
+    const handleConfirmEdit = () => {
+        saveEditedTodo(todo.id, inputValue);
+    }
+
+    const handleCancelEdit = () => {
+        setInputValue(todo.text);
+        editTodo(todo.id, false);
+    }
+
     return (
         <div>
             {showConfirm && (
@@ -41,8 +50,8 @@ function TodoItem({ todo, deleteTodo, completeTodo, editTodo }) {
             {todo.isEdit ? (
                 <form>
                     <input type="text" value={inputValue} ref={inputRef} onChange={(e) => setInputValue(e.target.value)}></input>
-                    <button>Save</button>
-                    <button>Cancel</button>
+                    <button onClick={handleConfirmEdit}>Save</button>
+                    <button onClick={handleCancelEdit}>Cancel</button>
                 </form>
             ) : (
                 <div style={{ textDecoration: todo.isComplete ? 'line-through' : 'none' }}>

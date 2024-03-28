@@ -22,12 +22,19 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   }
 
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  }
+
   return (
     <div className="App">
       <h1>MY TODO LIST</h1>
       <TodoForm addTodo={addTodo} />
       <TodoList
         todos={todos}
+        deleteTodo={deleteTodo}
       />
     </div>
   );

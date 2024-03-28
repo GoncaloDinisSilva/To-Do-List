@@ -16,6 +16,7 @@ function App() {
     const newTodo = {
       id: Date.now(),
       text,
+      isComplete: false,
     };
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
@@ -28,6 +29,14 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   }
 
+  const completeTodo = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo
+    );
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  }
+
   return (
     <div className="App">
       <h1>MY TODO LIST</h1>
@@ -35,6 +44,7 @@ function App() {
       <TodoList
         todos={todos}
         deleteTodo={deleteTodo}
+        completeTodo={completeTodo}
       />
     </div>
   );

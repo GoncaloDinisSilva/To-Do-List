@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
 
-function TodoItem({ todo, deleteTodo }) {
+function TodoItem({ todo, deleteTodo, completeTodo }) {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const handleDelete = () => {
@@ -26,9 +26,10 @@ function TodoItem({ todo, deleteTodo }) {
                     onCancel={handleCancelDelete}
                 />
             )}
-            <div>
+            <div style={{ textDecoration: todo.isComplete ? 'line-through' : 'none' }}>
                 <h2>{todo.text}</h2>
                 <button onClick={handleDelete}>Delete</button>
+                <button onClick={() => completeTodo(todo.id)}>Complete</button>
             </div>
         </div>
     );

@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
 
 function TodoItem({ todo, deleteTodo, completeTodo, editTodo }) {
     const [inputValue, setInputValue] = useState(todo.text);
     const [showConfirm, setShowConfirm] = useState(false);
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (todo.isEdit) {
+            inputRef.current.focus();
+        }
+    }, [todo.isEdit])
 
     const handleDelete = () => {
         setShowConfirm(true);
@@ -33,7 +40,7 @@ function TodoItem({ todo, deleteTodo, completeTodo, editTodo }) {
             )}
             {todo.isEdit ? (
                 <form>
-                    <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}></input>
+                    <input type="text" value={inputValue} ref={inputRef} onChange={(e) => setInputValue(e.target.value)}></input>
                     <button>Save</button>
                     <button>Cancel</button>
                 </form>

@@ -17,6 +17,7 @@ function App() {
       id: Date.now(),
       text,
       isComplete: false,
+      isEdit: false,
     };
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
@@ -37,6 +38,13 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   }
 
+  const editTodo = (id, isEditing) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isEdit: isEditing } : { ...todo, isEdit: false } // Set isEdit only for the task being edited
+    );
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="App">
       <h1>MY TODO LIST</h1>
@@ -45,6 +53,7 @@ function App() {
         todos={todos}
         deleteTodo={deleteTodo}
         completeTodo={completeTodo}
+        editTodo={editTodo}
       />
     </div>
   );

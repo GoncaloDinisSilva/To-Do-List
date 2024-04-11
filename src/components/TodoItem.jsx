@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
+import styles from "../styles/TodoItem.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrash, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function TodoItem({ todo, deleteTodo, completeTodo, editTodo, saveEditedTodo }) {
     const [inputValue, setInputValue] = useState(todo.text);
@@ -42,23 +45,26 @@ function TodoItem({ todo, deleteTodo, completeTodo, editTodo, saveEditedTodo }) 
         <div>
             {showConfirm && (
                 <ConfirmDialog
-                    message={`You are about to delete the following todo: "${todo.text}"\nAre you sure you want to proceed?`}
+                    message={`You are about to delete the following todo: "${todo.text}". Are you sure you want to proceed?`}
                     onConfirm={handleConfirmDelete}
                     onCancel={handleCancelDelete}
                 />
             )}
             {todo.isEdit ? (
-                <form>
+                <form className={styles.todoitemform}>
                     <input type="text" value={inputValue} ref={inputRef} onChange={(e) => setInputValue(e.target.value)}></input>
-                    <button onClick={handleConfirmEdit}>Save</button>
-                    <button onClick={handleCancelEdit}>Cancel</button>
+                    <div className={styles.buttons}>
+                        <button className={styles.confirm} onClick={handleConfirmEdit}><FontAwesomeIcon icon={faCheck} /></button>
+                        <button className={styles.delete} onClick={handleCancelEdit}><FontAwesomeIcon icon={faXmark} /></button>
+                    </div>
                 </form>
             ) : (
-                <div style={{ textDecoration: todo.isComplete ? 'line-through' : 'none' }}>
-                    <h2>{todo.text}</h2>
-                    <button onClick={handleDelete}>Delete</button>
-                    <button onClick={() => completeTodo(todo.id)}>Complete</button>
-                    <button onClick={handleEdit}>Edit</button>
+                <div className={todo.isComplete ? styles.todoitemcomplete : styles.todoitem}>
+                    <h2 onClick={() => completeTodo(todo.id)}>{todo.text}</h2>
+                    <div className={styles.buttons}>
+                        <button className={styles.edit} onClick={handleEdit} disabled={todo.isComplete}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                        <button className={styles.delete} onClick={handleDelete} disabled={todo.isComplete}><FontAwesomeIcon icon={faTrash} /></button>
+                    </div>
                 </div>
             )}
         </div>

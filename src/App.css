@@ -30,3 +30,8 @@ span {
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
+
+.empty {
+  color: #fff;
+  opacity: 95%;
+}

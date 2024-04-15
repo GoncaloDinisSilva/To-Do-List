@@ -58,13 +58,17 @@ function App() {
     <div className="App">
       <h1>MY <span>TODO</span> LIST</h1>
       <TodoForm addTodo={addTodo} />
-      <TodoList
-        todos={todos}
-        deleteTodo={deleteTodo}
-        completeTodo={completeTodo}
-        editTodo={editTodo}
-        saveEditedTodo={saveEditedTodo}
-      />
+      {todos.length > 0 ? (
+        <TodoList
+          todos={todos}
+          deleteTodo={deleteTodo}
+          completeTodo={completeTodo}
+          editTodo={editTodo}
+          saveEditedTodo={saveEditedTodo}
+        />
+      ) : (
+        <h3 className="empty">The list is empty</h3>
+      )}
     </div>
   );
 }
